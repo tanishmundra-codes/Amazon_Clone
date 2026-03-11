@@ -1,0 +1,175 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── User ───────────────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(CUSTOMER)
+  avatar    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  cartItems CartItem[]
+  orders    Order[]
+  reviews   Review[]
+
+  @@index([email])
+  @@map("users")
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+// ─── Category ───────────────────────────────────────────────────────────────────
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  image       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  products Product[]
+
+  @@index([slug])
+  @@map("categories")
+}
+
+// ─── Product ────────────────────────────────────────────────────────────────────
+
+model Product {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String
+  price       Decimal  @db.Decimal(10, 2)
+  mrp         Decimal  @db.Decimal(10, 2)
+  stock       Int      @default(0)
+  images      String[]
+  rating      Decimal  @default(0) @db.Decimal(2, 1)
+  reviewCount Int      @default(0) @map("review_count")
+  isFeatured  Boolean  @default(false) @map("is_featured")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  categoryId String   @map("category_id")
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+  reviews    Review[]
+
+  @@index([categoryId])
+  @@index([slug])
+  @@index([price])
+  @@index([isFeatured])
+  @@map("products")
+}
+
+// ─── Review ─────────────────────────────────────────────────────────────────────
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int
+  title     String?
+  comment   String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userId    String  @map("user_id")
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId String  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([productId])
+  @@map("reviews")
+}
+
+// ─── Cart ───────────────────────────────────────────────────────────────────────
+
+model CartItem {
+  id        String   @id @default(uuid())
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userId    String  @map("user_id")
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId String  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@map("cart_items")
+}
+
+// ─── Order ──────────────────────────────────────────────────────────────────────
+
+model Order {
+  id              String      @id @default(uuid())
+  status          OrderStatus @default(PENDING)
+  totalAmount     Decimal     @db.Decimal(10, 2) @map("total_amount")
+  shippingAddress String      @map("shipping_address")
+  city            String
+  state           String
+  zipCode         String      @map("zip_code")
+  phone           String
+  paymentMethod   String      @default("COD") @map("payment_method")
+  paymentId       String?     @map("payment_id")
+  paidAt          DateTime?   @map("paid_at")
+  deliveredAt     DateTime?   @map("delivered_at")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items OrderItem[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+// ─── OrderItem ──────────────────────────────────────────────────────────────────
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2)
+
+  orderId   String  @map("order_id")
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String  @map("product_id")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@map("order_items")
+}
