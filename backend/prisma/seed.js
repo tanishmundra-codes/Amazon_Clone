@@ -18,6 +18,17 @@ async function main() {
   await prisma.category.deleteMany();
   await prisma.user.deleteMany();
 
+  // Create the default user (well-known UUID used across the API)
+  await prisma.user.create({
+    data: {
+      id: "00000000-0000-0000-0000-000000000001",
+      email: "user@example.com",
+      password: "not-used",
+      name: "Default User",
+    },
+  });
+  console.log(`✅ Seeded default user`);
+
   const categories = await Promise.all(
     [
       {
