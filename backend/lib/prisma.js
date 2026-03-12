@@ -1,4 +1,3 @@
-// Prisma client singleton – reuses one connection across the app
 const { PrismaClient } = require("@prisma/client");
 const { PrismaPg } = require("@prisma/adapter-pg");
 

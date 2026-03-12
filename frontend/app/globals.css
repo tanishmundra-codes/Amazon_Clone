@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-amazon-dark: #131921;
+  --color-amazon-secondary: #232f3e;
+  --color-amazon-accent: #febd69;
+  --color-amazon-accent-hover: #f3a847;
+  --color-amazon-blue: #007185;
+  --color-amazon-orange: #ff9900;
+}
+
+body {
+  @apply bg-gray-100 text-gray-900 m-0;
+}
+
+* {
+  box-sizing: border-box;
+}
