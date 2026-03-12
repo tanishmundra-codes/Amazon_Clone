@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -22,6 +23,7 @@ const DEPARTMENT_LINKS = [
 
 export default function Navbar() {
   const { cartCount } = useCart();
+  const { user, logout } = useAuth();
   const router = useRouter();
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -133,13 +135,32 @@ export default function Navbar() {
           </div>
 
           {/* Account */}
-          <Link
-            href="/"
-            className="flex flex-col px-2 py-1 border border-transparent hover:border-white rounded text-white no-underline"
-          >
-            <span className="text-xs text-gray-300">Hello, sign in</span>
-            <span className="text-sm font-bold">Account & Lists</span>
-          </Link>
+          {user ? (
+            <div className="relative group">
+              <button className="flex flex-col px-2 py-1 border border-transparent hover:border-white rounded text-white bg-transparent cursor-pointer">
+                <span className="text-xs text-gray-300">Hello, {user.name.split(' ')[0]}</span>
+                <span className="text-sm font-bold">Account & Lists</span>
+              </button>
+              <div className="absolute right-0 top-full hidden group-hover:block bg-white border border-gray-200 rounded shadow-lg min-w-[180px] z-50 py-2">
+                <Link href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">Your Account</Link>
+                <Link href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">Your Orders</Link>
+                <button
+                  onClick={() => { logout(); router.push('/'); }}
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-transparent border-none cursor-pointer"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Link
+              href="/auth/login"
+              className="flex flex-col px-2 py-1 border border-transparent hover:border-white rounded text-white no-underline"
+            >
+              <span className="text-xs text-gray-300">Hello, sign in</span>
+              <span className="text-sm font-bold">Account & Lists</span>
+            </Link>
+          )}
 
           {/* Returns & Orders */}
           <Link
@@ -152,7 +173,7 @@ export default function Navbar() {
 
           {/* Cart */}
           <Link
-            href="/"
+            href="/cart"
             className="flex items-center px-2 py-1 border border-transparent hover:border-white rounded text-white no-underline relative"
           >
             <div className="relative">
@@ -179,7 +200,7 @@ export default function Navbar() {
 
         {/* Mobile cart (always visible) */}
         <Link
-          href="/"
+          href="/cart"
           className="lg:hidden flex items-center text-white no-underline relative px-1"
         >
           <div className="relative">
@@ -246,7 +267,7 @@ export default function Navbar() {
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                 <circle cx={12} cy={7} r={4} />
               </svg>
-              <span className="text-white font-bold text-lg">Hello, sign in</span>
+              <span className="text-white font-bold text-lg">{user ? `Hello, ${user.name.split(' ')[0]}` : "Hello, sign in"}</span>
             </div>
 
             {/* Department list */}

@@ -1,10 +1,9 @@
 const prisma = require("../lib/prisma");
-const { DEFAULT_USER_ID } = require("../lib/constants");
 
 // POST /api/orders
 // Places an order from the current cart contents, clears the cart, returns orderId.
-// Body (optional shipping info): { shippingAddress, city, state, zipCode, phone }
 async function placeOrder(req, res) {
+  const userId = req.user.userId;
   const {
     shippingAddress = "123 Default Street",
     city = "New York",
@@ -13,9 +12,8 @@ async function placeOrder(req, res) {
     phone = "555-0100",
   } = req.body;
 
-  // Fetch current cart
   const cartItems = await prisma.cartItem.findMany({
-    where: { userId: DEFAULT_USER_ID },
+    where: { userId },
     include: { product: true },
   });
 
@@ -35,7 +33,7 @@ async function placeOrder(req, res) {
   const order = await prisma.$transaction(async (tx) => {
     const newOrder = await tx.order.create({
       data: {
-        userId: DEFAULT_USER_ID,
+        userId,
         totalAmount: Number(totalAmount.toFixed(2)),
         shippingAddress,
         city,
@@ -54,7 +52,7 @@ async function placeOrder(req, res) {
     });
 
     // Clear the cart
-    await tx.cartItem.deleteMany({ where: { userId: DEFAULT_USER_ID } });
+    await tx.cartItem.deleteMany({ where: { userId } });
 
     return newOrder;
   });
