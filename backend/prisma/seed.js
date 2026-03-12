@@ -5,7 +5,7 @@ const { PrismaPg } = require("@prisma/adapter-pg");
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
-const img = (seed) => `https://picsum.photos/seed/${seed}/640/480`;
+
 
 async function main() {
 //   console.log("Seeding database …");
@@ -35,31 +35,31 @@ async function main() {
         name: "Electronics",
         slug: "electronics",
         description: "Smartphones, laptops, cameras, and more",
-        image: img("electronics"),
+        image: "/Electronics/AeroGlideWirelessErgonomicMouse.webp",
       },
       {
         name: "Books",
         slug: "books",
         description: "Bestsellers, fiction, non-fiction, and academic titles",
-        image: img("books"),
+        image: "/Books/AtomicHabits.webp",
       },
       {
         name: "Clothing",
         slug: "clothing",
         description: "Men's, women's, and kids' apparel",
-        image: img("clothing"),
+        image: "/Clothes/ClassicFitPremiumCottonCrewNeckT-Shirt.jpg",
       },
       {
         name: "Kitchen",
         slug: "kitchen",
         description: "Cookware, appliances, and dining essentials",
-        image: img("kitchen"),
+        image: "/Kitchen/BrewMasterProProgrammableCoffeeMaker.webp",
       },
       {
         name: "Sports",
         slug: "sports",
         description: "Fitness equipment, outdoor gear, and sportswear",
-        image: img("sports"),
+        image: "/Sports/FlexFitAdjustableDumbbellSet.webp",
       },
     ].map((c) => prisma.category.create({ data: c }))
   );
@@ -78,7 +78,7 @@ async function main() {
       rating: 4.5,
       reviewCount: 1842,
       isFeatured: true,
-      images: [img("headphones1"), img("headphones2"), img("headphones3")],
+      images: ["/Electronics/ProMaxWirelessNoiseCancellingHeadphones.webp"],
       categoryId: electronics.id,
     },
     {
@@ -92,7 +92,7 @@ async function main() {
       rating: 4.7,
       reviewCount: 734,
       isFeatured: true,
-      images: [img("monitor1"), img("monitor2")],
+      images: ["/Electronics/UltraView274KIPSMonitor.webp"],
       categoryId: electronics.id,
     },
     {
@@ -105,7 +105,7 @@ async function main() {
       stock: 300,
       rating: 4.4,
       reviewCount: 3201,
-      images: [img("powerbank1"), img("powerbank2")],
+      images: ["/Electronics/SwiftCharge20000mAhPowerBank.webp"],
       categoryId: electronics.id,
     },
     {
@@ -118,7 +118,7 @@ async function main() {
       stock: 200,
       rating: 4.3,
       reviewCount: 2105,
-      images: [img("speaker1"), img("speaker2")],
+      images: ["/Electronics/TrueSoundPortablBluetoothSpeaker.webp"],
       categoryId: electronics.id,
     },
     {
@@ -131,7 +131,7 @@ async function main() {
       stock: 150,
       rating: 4.6,
       reviewCount: 967,
-      images: [img("keyboard1"), img("keyboard2")],
+      images: ["/Electronics/MechForceRGBMechanicalKeyboard.webp"],
       categoryId: electronics.id,
     },
     {
@@ -145,7 +145,7 @@ async function main() {
       rating: 4.2,
       reviewCount: 1456,
       isFeatured: true,
-      images: [img("tracker1"), img("tracker2")],
+      images: ["/Electronics/SmartFitProFitnessTracker.webp"],
       categoryId: electronics.id,
     },
     {
@@ -158,7 +158,7 @@ async function main() {
       stock: 175,
       rating: 4.1,
       reviewCount: 543,
-      images: [img("webcam1"), img("webcam2")],
+      images: ["/Electronics/ClearCam4KWebcamwithRingLight.webp"],
       categoryId: electronics.id,
     },
     {
@@ -171,7 +171,7 @@ async function main() {
       stock: 400,
       rating: 4.5,
       reviewCount: 2387,
-      images: [img("mouse1"), img("mouse2")],
+      images: ["/Electronics/AeroGlideWirelessErgonomicMouse.webp"],
       categoryId: electronics.id,
     },
 
@@ -186,7 +186,7 @@ async function main() {
       rating: 4.7,
       reviewCount: 12450,
       isFeatured: true,
-      images: [img("cleancode1")],
+      images: ["/Books/CleanCode.webp"],
       categoryId: books.id,
     },
     {
@@ -200,7 +200,7 @@ async function main() {
       rating: 4.8,
       reviewCount: 98210,
       isFeatured: true,
-      images: [img("atomichabits1")],
+      images: ["/Books/AtomicHabits.webp"],
       categoryId: books.id,
     },
     {
@@ -213,7 +213,7 @@ async function main() {
       stock: 300,
       rating: 4.6,
       reviewCount: 4321,
-      images: [img("pragprog1")],
+      images: ["/Books/ThePragmaticProgrammer.webp"],
       categoryId: books.id,
     },
     {
@@ -226,7 +226,7 @@ async function main() {
       stock: 220,
       rating: 4.8,
       reviewCount: 7654,
-      images: [img("ddia1")],
+      images: ["/Books/DesigningDataIntensiveApplications.webp"],
       categoryId: books.id,
     },
     {
@@ -239,7 +239,7 @@ async function main() {
       stock: 600,
       rating: 4.6,
       reviewCount: 45320,
-      images: [img("psymoney1")],
+      images: ["/Books/phychlologyofmoney.webp"],
       categoryId: books.id,
     },
     {
@@ -252,7 +252,7 @@ async function main() {
       stock: 350,
       rating: 4.5,
       reviewCount: 8910,
-      images: [img("sysdesign1")],
+      images: ["/Books/systemdesign.webp"],
       categoryId: books.id,
     },
     {
@@ -265,7 +265,7 @@ async function main() {
       stock: 420,
       rating: 4.4,
       reviewCount: 23100,
-      images: [img("deepwork1")],
+      images: ["/Books/deepwork.webp"],
       categoryId: books.id,
     },
 
@@ -279,7 +279,7 @@ async function main() {
       stock: 1000,
       rating: 4.3,
       reviewCount: 15670,
-      images: [img("tshirt1"), img("tshirt2")],
+      images: ["/Clothes/ClassicFitPremiumCottonCrewNeckT-Shirt.jpg"],
       categoryId: clothing.id,
     },
     {
@@ -292,7 +292,7 @@ async function main() {
       stock: 350,
       rating: 4.4,
       reviewCount: 4520,
-      images: [img("chinos1"), img("chinos2")],
+      images: ["/Clothes/UrbanFlexSlimFitStretchChinos.jpg"],
       categoryId: clothing.id,
     },
     {
@@ -306,7 +306,7 @@ async function main() {
       rating: 4.5,
       reviewCount: 2340,
       isFeatured: true,
-      images: [img("jacket1"), img("jacket2")],
+      images: ["/Clothes/AllWeatherLightweightWindbreakerJacket.webp"],
       categoryId: clothing.id,
     },
     {
@@ -319,7 +319,7 @@ async function main() {
       stock: 280,
       rating: 4.3,
       reviewCount: 6780,
-      images: [img("shoes1"), img("shoes2"), img("shoes3")],
+      images: ["/Clothes/ComfortStrideRunningShoes.jpg"],
       categoryId: clothing.id,
     },
     {
@@ -332,7 +332,7 @@ async function main() {
       stock: 150,
       rating: 4.6,
       reviewCount: 1890,
-      images: [img("hoodie1"), img("hoodie2")],
+      images: ["/Clothes/ThermoLayerMerinoWoolHoodie.jpg"],
       categoryId: clothing.id,
     },
     {
@@ -345,7 +345,7 @@ async function main() {
       stock: 500,
       rating: 4.2,
       reviewCount: 3450,
-      images: [img("polo1"), img("polo2")],
+      images: ["/Clothes/DryTechMoisture.jpg"],
       categoryId: clothing.id,
     },
 
@@ -360,7 +360,7 @@ async function main() {
       rating: 4.4,
       reviewCount: 5670,
       isFeatured: true,
-      images: [img("coffeemaker1"), img("coffeemaker2")],
+      images: ["/Kitchen/BrewMasterProProgrammableCoffeeMaker.webp"],
       categoryId: kitchen.id,
     },
     {
@@ -373,7 +373,7 @@ async function main() {
       stock: 75,
       rating: 4.7,
       reviewCount: 2340,
-      images: [img("knifeset1"), img("knifeset2")],
+      images: ["/Kitchen/ChefEdge.webp"],
       categoryId: kitchen.id,
     },
     {
@@ -386,7 +386,7 @@ async function main() {
       stock: 160,
       rating: 4.5,
       reviewCount: 8920,
-      images: [img("airfryer1"), img("airfryer2")],
+      images: ["/Kitchen/AirCrispDigitalAir Fryer.webp"],
       categoryId: kitchen.id,
     },
     {
@@ -399,7 +399,7 @@ async function main() {
       stock: 180,
       rating: 4.3,
       reviewCount: 4510,
-      images: [img("blender1"), img("blender2")],
+      images: ["/Kitchen/NutriBlend.webp"],
       categoryId: kitchen.id,
     },
     {
@@ -412,7 +412,7 @@ async function main() {
       stock: 250,
       rating: 4.8,
       reviewCount: 32100,
-      images: [img("skillet1"), img("skillet2")],
+      images: ["/Kitchen/CastIronLodge.webp"],
       categoryId: kitchen.id,
     },
     {
@@ -425,7 +425,7 @@ async function main() {
       stock: 60,
       rating: 4.4,
       reviewCount: 3120,
-      images: [img("cookware1"), img("cookware2")],
+      images: ["/Kitchen/SilkPourNon-StickCookwareSet.jpg"],
       categoryId: kitchen.id,
     },
 
@@ -440,7 +440,7 @@ async function main() {
       rating: 4.7,
       reviewCount: 6780,
       isFeatured: true,
-      images: [img("dumbbell1"), img("dumbbell2")],
+      images: ["/Sports/FlexFitAdjustableDumbbellSet.webp"],
       categoryId: sports.id,
     },
     {
@@ -453,7 +453,7 @@ async function main() {
       stock: 350,
       rating: 4.5,
       reviewCount: 9870,
-      images: [img("yogamat1"), img("yogamat2")],
+      images: ["/Sports/YogaZenPremiumNon-SlipMat.webp"],
       categoryId: sports.id,
     },
     {
@@ -466,7 +466,7 @@ async function main() {
       stock: 100,
       rating: 4.4,
       reviewCount: 3450,
-      images: [img("backpack1"), img("backpack2")],
+      images: ["/Sports/TrailBlazer50LHikingBackpack.webp"],
       categoryId: sports.id,
     },
     {
@@ -479,7 +479,7 @@ async function main() {
       stock: 25,
       rating: 4.3,
       reviewCount: 2100,
-      images: [img("spinbike1"), img("spinbike2")],
+      images: ["/Sports/SpinCycleIndoorExerciseBike.webp"],
       categoryId: sports.id,
     },
     {
@@ -492,7 +492,7 @@ async function main() {
       stock: 500,
       rating: 4.6,
       reviewCount: 14300,
-      images: [img("bands1"), img("bands2")],
+      images: ["/Sports/GripForceResistanceBandset.webp"],
       categoryId: sports.id,
     },
     {
@@ -505,7 +505,7 @@ async function main() {
       stock: 600,
       rating: 4.5,
       reviewCount: 18200,
-      images: [img("bottle1"), img("bottle2")],
+      images: ["/Sports/AquaStrikeInsulatedWaterBottle.webp"],
       categoryId: sports.id,
     },
   ];

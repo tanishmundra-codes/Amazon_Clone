@@ -9,9 +9,13 @@ const API = process.env.NEXT_PUBLIC_API_URL;
 
 const DEPARTMENT_LINKS = [
   { label: "All", href: "/" },
+  { label: "Electronics", href: "/?category=electronics" },
+  { label: "Books", href: "/?category=books" },
+  { label: "Clothing", href: "/?category=clothing" },
+  { label: "Kitchen", href: "/?category=kitchen" },
+  { label: "Sports", href: "/?category=sports" },
   { label: "Today's Deals", href: "/" },
   { label: "Customer Service", href: "/" },
-  { label: "Registry", href: "/" },
   { label: "Gift Cards", href: "/" },
   { label: "Sell", href: "/" },
 ];
@@ -22,6 +26,7 @@ export default function Navbar() {
   const [categories, setCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     async function loadCategories() {
@@ -70,15 +75,16 @@ export default function Navbar() {
         {/* Search Bar */}
         <form
           onSubmit={handleSearch}
-          className="flex flex-1 h-[42px] rounded-md focus-within:ring-2 focus-within:ring-amazon-accent overflow-hidden"
+          className="flex flex-1 h-[45px] rounded-md focus-within:ring-2 focus-within:ring-amazon-accent overflow-hidden"
         >
           {/* Category dropdown */}
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="bg-[#e6e6e6] hover:bg-[#d4d4d4] text-gray-700 text-sm pl-3 pr-6 border-r border-gray-300 outline-none cursor-pointer rounded-l-md appearance-none
+            className="bg-[#e6e6e6] hover:bg-[#d4d4d4] text-gray-700 text-sm pl-2 pr-5 border-r border-gray-300 outline-none cursor-pointer rounded-l-md appearance-none shrink-0
               bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23555%22%20stroke-width%3D%223%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22/%3E%3C/svg%3E')]
-              bg-no-repeat bg-[right_6px_center]"
+              bg-no-repeat bg-[right_4px_center]"
+            style={{ width: 50, height: 45 }}
             aria-label="Search category"
           >
             <option value="All">All</option>
@@ -198,25 +204,96 @@ export default function Navbar() {
 
       {/* ── Secondary Nav (Department Links) ── */}
       <div className="bg-amazon-secondary flex items-center px-4 py-1.5 gap-1 text-white text-sm overflow-x-auto">
-        {DEPARTMENT_LINKS.map((link) => (
-          <Link
-            key={link.label}
-            href={link.href}
-            className="px-2 py-1 border border-transparent hover:border-white rounded whitespace-nowrap text-white no-underline"
-          >
-            {link.label === "All" ? (
+        {DEPARTMENT_LINKS.map((link) =>
+          link.label === "All" ? (
+            <button
+              key={link.label}
+              onClick={() => setSidebarOpen(true)}
+              className="px-2 py-1 border border-transparent hover:border-white rounded whitespace-nowrap text-white bg-transparent cursor-pointer text-sm"
+            >
               <span className="font-bold flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                   <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth={2} fill="none" />
                 </svg>
                 All
               </span>
-            ) : (
-              link.label
-            )}
-          </Link>
-        ))}
+            </button>
+          ) : (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="px-2 py-1 border border-transparent hover:border-white rounded whitespace-nowrap text-white no-underline"
+            >
+              {link.label}
+            </Link>
+          )
+        )}
       </div>
+
+      {/* ── Sidebar Drawer ── */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-[100] flex">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setSidebarOpen(false)}
+          />
+          {/* Panel */}
+          <aside className="relative w-[320px] max-w-[85vw] bg-white h-full shadow-xl overflow-y-auto animate-slide-in-left">
+            {/* Header */}
+            <div className="bg-amazon-secondary px-5 py-3 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2} className="w-6 h-6">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx={12} cy={7} r={4} />
+              </svg>
+              <span className="text-white font-bold text-lg">Hello, sign in</span>
+            </div>
+
+            {/* Department list */}
+            <div className="p-4">
+              <h3 className="text-[16px] font-bold text-gray-900 mb-3">Shop By Department</h3>
+              <ul className="space-y-0.5 list-none m-0 p-0">
+                <li>
+                  <button
+                    onClick={() => {
+                      router.push("/");
+                      setSidebarOpen(false);
+                    }}
+                    className="text-left w-full text-[14px] py-2 px-3 rounded cursor-pointer border-none bg-transparent text-gray-700 hover:bg-gray-100 hover:text-amazon-orange"
+                  >
+                    All Departments
+                  </button>
+                </li>
+                {categories.map((cat) => (
+                  <li key={cat.id}>
+                    <button
+                      onClick={() => {
+                        router.push(`/?category=${cat.slug}`);
+                        setSidebarOpen(false);
+                      }}
+                      className="text-left w-full text-[14px] py-2 px-3 rounded cursor-pointer border-none bg-transparent text-gray-700 hover:bg-gray-100 hover:text-amazon-orange"
+                    >
+                      {cat.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+
+          {/* Close button */}
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="absolute top-2 left-[325px] max-[85vw]:left-[calc(85vw+5px)] text-white bg-transparent border-none cursor-pointer"
+            aria-label="Close menu"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-7 h-7">
+              <line x1={18} y1={6} x2={6} y2={18} />
+              <line x1={6} y1={6} x2={18} y2={18} />
+            </svg>
+          </button>
+        </div>
+      )}
     </header>
   );
 }

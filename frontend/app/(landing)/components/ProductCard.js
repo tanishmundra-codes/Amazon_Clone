@@ -2,38 +2,6 @@
 
 import { useCart } from "../../../context/CartContext";
 
-const BOOK_IMAGES = {
-  "atomic-habits": "/Books/AtomicHabits.webp",
-  "clean-code-handbook": "/Books/CleanCode.webp",
-  "deep-work-cal-newport": "/Books/deepwork.webp",
-  "designing-data-intensive-apps": "/Books/DesigningDataIntensiveApplications.webp",
-  "psychology-of-money": "/Books/phychlologyofmoney.webp",
-  "system-design-interview-v1": "/Books/systemdesign.webp",
-  "pragmatic-programmer-20th": "/Books/ThePragmaticProgrammer.webp",
-};
-
-const CLOTHES_IMAGES = {
-  "allweather-windbreaker-jacket": "/Clothes/AllWeatherLightweightWindbreakerJacket.webp",
-  "classic-fit-cotton-tshirt": "/Clothes/ClassicFitPremiumCottonCrewNeckT-Shirt.jpg",
-  "comfortstride-running-shoes": "/Clothes/ComfortStrideRunningShoes.jpg",
-  "drytech-polo-shirt": "/Clothes/DryTechMoisture.jpg",
-  "thermolayer-merino-hoodie": "/Clothes/ThermoLayerMerinoWoolHoodie.jpg",
-  "urbanflex-slim-chinos": "/Clothes/UrbanFlexSlimFitStretchChinos.jpg",
-};
-
-const ELECTRONICS_IMAGES = {
-  "aeroglide-wireless-mouse": "/Electronics/AeroGlideWirelessErgonomicMouse.webp",
-  "clearcam-4k-webcam": "/Electronics/ClearCam4KWebcamwithRingLight.webp",
-  "mechforce-rgb-mechanical-keyboard": "/Electronics/MechForceRGBMechanicalKeyboard.webp",
-  "promax-wireless-nc-headphones": "/Electronics/ProMaxWirelessNoiseCancellingHeadphones.webp",
-  "smartfit-pro-fitness-tracker": "/Electronics/SmartFitProFitnessTracker.webp",
-  "swiftcharge-20000mah-power-bank": "/Electronics/SwiftCharge20000mAhPowerBank.webp",
-  "truesound-bluetooth-speaker": "/Electronics/TrueSoundPortablBluetoothSpeaker.webp",
-  "ultraview-27-4k-monitor": "/Electronics/UltraView274KIPSMonitor.webp",
-};
-
-const LOCAL_IMAGES = { ...BOOK_IMAGES, ...CLOTHES_IMAGES, ...ELECTRONICS_IMAGES };
-
 // Deterministic pseudo-random from product id for sponsored badge & rating
 function hashId(id) {
   let h = 0;
@@ -92,7 +60,7 @@ export default function ProductCard({ product }) {
   const price = Number(product.price);
   const mrp = Number(product.mrp);
   const discount = mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0;
-  const image = LOCAL_IMAGES[product.slug] || product.images?.[0] || "/placeholder.png";
+  const image = product.images?.[0] || "/placeholder.png";
 
   async function handleAddToCart() {
     await addToCart(product.id, 1);
