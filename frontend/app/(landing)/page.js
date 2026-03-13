@@ -348,13 +348,48 @@ function HomeContent() {
           </div>
         </div>
 
-        {/* Product Grid Cards */}
         <div className="w-full px-4 mt-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <ProductGridCard title="Top Electronics" slug="electronics" products={allProducts} />
-            <ProductGridCard title="Popular Books" slug="books" products={allProducts} />
-            <ProductGridCard title="Trending Clothing" slug="clothing" products={allProducts} />
-            <ProductGridCard title="Kitchen Essentials" slug="kitchen" products={allProducts} />
+            <CategoryCard 
+              title="Top Electronics" 
+              slug="electronics" 
+              items={[
+                { img: "/Electronics/SmartFitProFitnessTracker.webp", label: "Fitness Trackers" },
+                { img: "/Electronics/MechForceRGBMechanicalKeyboard.webp", label: "Keyboards" },
+                { img: "/Electronics/SwiftCharge20000mAhPowerBank.webp", label: "Power Banks" },
+                { img: "/Electronics/TrueSoundPortablBluetoothSpeaker.webp", label: "Speakers" }
+              ]} 
+            />
+            <CategoryCard 
+              title="Popular Books" 
+              slug="books" 
+              items={[
+                { img: "/Books/ThePragmaticProgrammer.webp", label: "Pragmatic Programmer" },
+                { img: "/Books/phychlologyofmoney.webp", label: "Psychology" },
+                { img: "/Books/systemdesign.webp", label: "System Design" },
+                { img: "/Books/AtomicHabits.webp", label: "Self Help" }
+              ]} 
+            />
+            <CategoryCard 
+              title="Trending Clothing" 
+              slug="clothing" 
+              items={[
+                { img: "/Clothes/AllWeatherLightweightWindbreakerJacket.webp", label: "Jackets" },
+                { img: "/Clothes/DryTechMoisture.jpg", label: "Activewear" },
+                { img: "/Clothes/ComfortStrideRunningShoes.jpg", label: "Shoes" },
+                { img: "/Clothes/ThermoLayerMerinoWoolHoodie.jpg", label: "Hoodies" }
+              ]} 
+            />
+            <CategoryCard 
+              title="Kitchen Essentials" 
+              slug="kitchen" 
+              items={[
+                { img: "/Kitchen/AirCrispDigitalAir Fryer.webp", label: "Air Fryers" },
+                { img: "/Kitchen/ChefEdge.webp", label: "Knives" },
+                { img: "/Kitchen/CastIronLodge.webp", label: "Cast Iron" },
+                { img: "/Kitchen/NutriBlend.webp", label: "Blenders" }
+              ]} 
+            />
           </div>
         </div>
 
