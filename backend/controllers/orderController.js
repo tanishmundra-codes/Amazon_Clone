@@ -94,4 +94,32 @@ async function getOrder(req, res) {
   res.json({ success: true, data: order });
 }
 
-module.exports = { placeOrder, getOrder };
+
+// GET /api/orders
+// Returns all orders for the currently authenticated user
+async function getUserOrders(req, res) {
+  const userId = req.user.userId;
+
+  const orders = await prisma.order.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+    include: {
+      items: {
+        include: {
+          product: {
+            select: {
+              id: true,
+              title: true,
+              images: true,
+              price: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  res.json({ success: true, data: orders });
+}
+
+module.exports = { placeOrder, getOrder, getUserOrders };

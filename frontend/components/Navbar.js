@@ -145,7 +145,7 @@ export default function Navbar() {
                 </button>
                 <div className="absolute right-0 top-full hidden group-hover:block bg-white border border-gray-200 rounded shadow-lg min-w-45 z-50 py-2">
                   <Link href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">Your Account</Link>
-                  <Link href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">Your Orders</Link>
+                  <Link href="/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline">Your Orders</Link>
                   <button
                     onClick={() => {
                       logout();
@@ -168,7 +168,7 @@ export default function Navbar() {
             )}
 
             <Link
-              href="/"
+              href="/orders"
               className="flex flex-col justify-center h-11 px-2 py-1 border border-transparent hover:border-white rounded text-white no-underline"
             >
               <span className="text-xs text-gray-300">Returns</span>
