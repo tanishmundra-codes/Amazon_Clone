@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatUSD } from "../../../../lib/currency";
 
 const STATUS_COLORS = {
   PENDING:   "text-yellow-700 bg-yellow-50 border border-yellow-200",
@@ -92,10 +93,7 @@ export default function OrderConfirmation({ order }) {
       <div className="mt-5 pt-4 border-t border-gray-100 flex justify-between items-center">
         <span className="text-sm font-medium text-[#0f1111]">Order Total</span>
         <span className="text-lg font-bold text-[#0f1111]">
-          ₹
-          {Number(order.totalAmount).toLocaleString("en-IN", {
-            minimumFractionDigits: 2,
-          })}
+          {formatUSD(order.totalAmount)}
         </span>
       </div>
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { formatUSDWhole } from "../../../../lib/currency";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -152,14 +153,14 @@ export default function RelatedProducts({ categorySlug, currentProductId }) {
                     </div>
                   )}
                   <div className="flex items-baseline">
-                    <span className="text-[12px] align-top relative -top-[4px]">₹</span>
+                    <span className="text-[12px] align-top relative -top-[4px]">$</span>
                     <span className="text-[18px] font-medium text-[#0f1111]">
-                      {Math.floor(price).toLocaleString("en-IN")}
+                      {formatUSDWhole(price)}
                     </span>
                   </div>
                   {discount > 0 && (
                     <p className="text-[12px] text-[#565959]">
-                      M.R.P: <span className="line-through">₹{Math.floor(mrp).toLocaleString("en-IN")}</span>
+                      M.R.P: <span className="line-through">${formatUSDWhole(mrp)}</span>
                     </p>
                   )}
                 </div>

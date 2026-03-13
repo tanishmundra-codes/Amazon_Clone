@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCart } from "../../../context/CartContext";
+import { formatUSDWhole } from "../../../lib/currency";
 
 // Deterministic pseudo-random from product id
 function hashId(id) {
@@ -113,15 +114,15 @@ export default function ProductCard({ product }) {
       {/* Price */}
       <div className="mt-1">
         <div className="flex items-baseline gap-0.5">
-          <span className="text-[13px] align-top relative -top-[5px]">₹</span>
+          <span className="text-[13px] align-top relative -top-[5px]">$</span>
           <span className="text-[28px] font-medium leading-none text-[#0f1111]">
-            {Math.floor(price).toLocaleString("en-IN")}
+            {formatUSDWhole(price)}
           </span>
         </div>
         {discount > 0 && (
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="text-[13px] text-[#565959]">
-              M.R.P: <span className="line-through">₹{Math.floor(mrp).toLocaleString("en-IN")}</span>
+              M.R.P: <span className="line-through">${formatUSDWhole(mrp)}</span>
             </span>
             <span className="text-[13px] text-[#cc0c39] font-medium">
               ({discount}% off)

@@ -124,7 +124,7 @@ export default function Footer() {
           </button>
           <button className="flex items-center gap-1.5 border border-[#aaa] text-white text-[13px] px-3 py-1.5 rounded cursor-pointer bg-transparent hover:bg-[#3a4553] transition-colors">
             <img src="/navbar/flag.png" alt="IN" width={18} height={13} />
-            India
+            US
           </button>
         </div>
       </div>

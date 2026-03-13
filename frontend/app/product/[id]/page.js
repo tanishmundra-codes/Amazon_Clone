@@ -65,7 +65,12 @@ export default function ProductDetailPage() {
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-12 flex flex-col lg:flex-row gap-6">
         {/* Left – Image */}
         <div className="lg:w-[38%] shrink-0">
-          <ProductImage images={product.images} title={product.title} />
+          <ProductImage
+            images={product.images}
+            title={product.title}
+            categorySlug={product.category?.slug}
+            categoryImage={product.category?.image}
+          />
         </div>
 
         {/* Middle – Product info */}

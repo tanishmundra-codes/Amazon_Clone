@@ -6,6 +6,7 @@ import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import CartItem from "./components/CartItem";
 import CartSummary from "./components/CartSummary";
+import { formatUSD } from "../../lib/currency";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -89,9 +90,9 @@ export default function CartPage() {
         <div className="p-4 text-right text-lg text-[#0f1111]">
           Subtotal ({displayItems.reduce((s, i) => s + i.quantity, 0)} items):{" "}
           <span className="font-bold">
-            ₹{displayItems
-              .reduce((s, i) => s + i.quantity * Number(i.product?.price || 0), 0)
-              .toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+            {formatUSD(
+              displayItems.reduce((s, i) => s + i.quantity * Number(i.product?.price || 0), 0)
+            )}
           </span>
         </div>
       </div>

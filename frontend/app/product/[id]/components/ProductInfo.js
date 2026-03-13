@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import { formatUSDWhole } from "../../../../lib/currency";
 
 function hashId(id) {
   let h = 0;
@@ -58,17 +59,17 @@ function StarRating({ rating, count, id }) {
 const OFFERS = [
   {
     title: "Cashback",
-    description: "Upto ₹623.00 cashback as Amazon Pay Balance when...",
+    description: "Upto $623.00 cashback as Amazon Pay Balance when...",
     link: "1 offer ›",
   },
   {
     title: "No Cost EMI",
-    description: "Upto ₹542.22 EMI interest savings on Amazon Pay ICICI...",
+    description: "Upto $542.22 EMI interest savings on Amazon Pay ICICI...",
     link: "1 offer ›",
   },
   {
     title: "Bank Offer",
-    description: "Upto ₹1,000.00 discount on HDFC Bank Credit Cards",
+    description: "Upto $1,000.00 discount on HDFC Bank Credit Cards",
     link: "8 offers ›",
   },
   {
@@ -227,24 +228,24 @@ export default function ProductInfo({ product }) {
           <div className="flex items-baseline gap-2 mb-0.5">
             <span className="text-[28px] text-[#cc0c39]">-{discount}%</span>
             <div className="flex items-baseline">
-              <span className="text-[13px] align-top relative -top-[10px]">₹</span>
+              <span className="text-[13px] align-top relative -top-[10px]">$</span>
               <span className="text-[28px] font-medium text-[#0f1111]">
-                {Math.floor(price).toLocaleString("en-IN")}
+                {formatUSDWhole(price)}
               </span>
             </div>
           </div>
         )}
         {!discount && (
           <div className="flex items-baseline">
-            <span className="text-[13px] align-top relative -top-[10px]">₹</span>
+            <span className="text-[13px] align-top relative -top-[10px]">$</span>
             <span className="text-[28px] font-medium text-[#0f1111]">
-              {Math.floor(price).toLocaleString("en-IN")}
+              {formatUSDWhole(price)}
             </span>
           </div>
         )}
         {discount > 0 && (
           <p className="text-[14px] text-[#565959]">
-            M.R.P.: <span className="line-through">₹{Math.floor(mrp).toLocaleString("en-IN")}</span>
+            M.R.P.: <span className="line-through">${formatUSDWhole(mrp)}</span>
           </p>
         )}
         <p className="text-[13px] text-[#565959] mt-0.5">Inclusive of all taxes</p>

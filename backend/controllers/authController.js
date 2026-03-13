@@ -2,13 +2,17 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const prisma = require("../lib/prisma");
 
-const JWT_SECRET = process.env.JWT_SECRET || "amazon-clone-jwt-secret-change-me";
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET environment variable is required");
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 const COOKIE_NAME = "token";
+const IS_PROD = process.env.NODE_ENV === "production";
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  sameSite: "lax",
-  secure: process.env.NODE_ENV === "production",
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  sameSite: IS_PROD ? "none" : "lax",  // "none" required for cross-domain cookies
+  secure: IS_PROD,                      // must be true when sameSite is "none"
+  maxAge: 7 * 24 * 60 * 60 * 1000,     // 7 days
   path: "/",
 };
 

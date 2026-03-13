@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../context/AuthContext";
+import { formatUSD } from "../../../lib/currency";
 
 export default function CartSummary({ items }) {
   const { user } = useAuth();
@@ -25,7 +26,7 @@ export default function CartSummary({ items }) {
     <div className="bg-white rounded-sm p-5 sticky top-4">
       <p className="text-lg text-[#0f1111] mb-4">
         Subtotal ({totalItems} {totalItems === 1 ? "item" : "items"}):{" "}
-        <span className="font-bold">₹{subtotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}</span>
+        <span className="font-bold">{formatUSD(subtotal)}</span>
       </p>
 
       <button

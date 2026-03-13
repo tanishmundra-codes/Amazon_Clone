@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatUSD } from "../../../../lib/currency";
 
 export default function OrderItems({ items }) {
   return (
@@ -32,15 +33,12 @@ export default function OrderItems({ items }) {
                 </Link>
                 <p className="text-xs text-gray-500 mt-1">Qty: {item.quantity}</p>
                 <p className="text-sm text-gray-600 mt-0.5">
-                  ₹{unitPrice.toLocaleString("en-IN")} each
+                  {formatUSD(unitPrice)} each
                 </p>
               </div>
 
               <div className="text-sm font-bold text-[#0f1111] shrink-0">
-                ₹
-                {(unitPrice * item.quantity).toLocaleString("en-IN", {
-                  minimumFractionDigits: 2,
-                })}
+                {formatUSD(unitPrice * item.quantity)}
               </div>
             </div>
           );
@@ -49,10 +47,7 @@ export default function OrderItems({ items }) {
 
       {/* Row total */}
       <div className="mt-4 pt-4 border-t border-gray-100 text-right text-sm font-bold text-[#0f1111]">
-        Total: ₹
-        {items
-          .reduce((s, i) => s + Number(i.price) * i.quantity, 0)
-          .toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+        Total: {formatUSD(items.reduce((s, i) => s + Number(i.price) * i.quantity, 0))}
       </div>
     </div>
   );

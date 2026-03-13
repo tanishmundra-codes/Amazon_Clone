@@ -1,5 +1,7 @@
 "use client";
 
+import { formatUSD } from "../../../lib/currency";
+
 export default function OrderReview({
   shipping,
   cartItems,
@@ -60,10 +62,7 @@ export default function OrderReview({
                     <p className="text-xs text-gray-500 mt-0.5">Qty: {item.quantity}</p>
                   </div>
                   <div className="text-sm font-medium text-[#0f1111] shrink-0">
-                    ₹
-                    {(price * item.quantity).toLocaleString("en-IN", {
-                      minimumFractionDigits: 2,
-                    })}
+                    {formatUSD(price * item.quantity)}
                   </div>
                 </div>
               );
@@ -80,9 +79,7 @@ export default function OrderReview({
           <div className="space-y-2 text-sm text-gray-700">
             <div className="flex justify-between">
               <span>Items ({totalItems})</span>
-              <span>
-                ₹{subtotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
-              </span>
+              <span>{formatUSD(subtotal)}</span>
             </div>
             <div className="flex justify-between">
               <span>Delivery</span>
@@ -90,9 +87,7 @@ export default function OrderReview({
             </div>
             <div className="border-t border-dashed border-gray-300 pt-2 flex justify-between font-bold text-base text-[#0f1111]">
               <span>Order Total</span>
-              <span>
-                ₹{subtotal.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
-              </span>
+              <span>{formatUSD(subtotal)}</span>
             </div>
           </div>
 

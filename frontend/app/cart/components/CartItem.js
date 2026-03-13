@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import QuantityControl from "./QuantityControl";
+import { formatUSD, formatUSDWhole } from "../../../lib/currency";
 
 export default function CartItem({ item, onUpdateQuantity, onRemove }) {
   const { product, quantity } = item;
@@ -39,12 +40,12 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }) {
         {/* Price */}
         <div className="flex items-baseline gap-2 mb-3">
           <span className="text-lg font-medium text-[#0f1111]">
-            ₹{price.toLocaleString("en-IN")}
+            ${formatUSDWhole(price)}
           </span>
           {discount > 0 && (
             <>
               <span className="text-sm text-gray-500 line-through">
-                ₹{mrp.toLocaleString("en-IN")}
+                {formatUSD(mrp)}
               </span>
               <span className="text-sm text-red-600 font-medium">
                 ({discount}% off)

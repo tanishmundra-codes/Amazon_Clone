@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "../../../../context/CartContext";
+import { formatUSDWhole } from "../../../../lib/currency";
 
 function getDeliveryDate(daysFromNow) {
   const d = new Date();
@@ -39,20 +40,20 @@ export default function ProductActions({ product }) {
         <div className="flex items-baseline gap-1.5">
           {discount > 0 && (
             <>
-              <span className="text-[14px] align-top relative -top-[6px]">₹</span>
+              <span className="text-[14px] align-top relative -top-[6px]">$</span>
               <span className="text-[22px] font-medium text-[#0f1111]">
-                {Math.floor(price).toLocaleString("en-IN")}
+                {formatUSDWhole(price)}
               </span>
               <span className="text-[14px] text-[#565959] line-through ml-1">
-                ₹{Math.floor(mrp).toLocaleString("en-IN")}
+                ${formatUSDWhole(mrp)}
               </span>
             </>
           )}
           {!discount && (
             <>
-              <span className="text-[14px] align-top relative -top-[6px]">₹</span>
+              <span className="text-[14px] align-top relative -top-[6px]">$</span>
               <span className="text-[22px] font-medium text-[#0f1111]">
-                {Math.floor(price).toLocaleString("en-IN")}
+                {formatUSDWhole(price)}
               </span>
             </>
           )}

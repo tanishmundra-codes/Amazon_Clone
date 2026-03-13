@@ -71,51 +71,77 @@ function BannerCarousel() {
     []
   );
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((c) => (c + 1) % BANNERS.length);
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="relative w-full overflow-hidden" style={{ height: 600 }}>
-      {/* Slides */}
-      <div
-        className="flex transition-transform duration-500 ease-in-out h-full"
-        style={{ transform: `translateX(-${current * 100}%)` }}
-      >
-        {BANNERS.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt={`Banner ${i + 1}`}
-            className="w-full shrink-0 object-cover object-top"
-            style={{ height: 600 }}
-          />
-        ))}
+    <>
+      <div className="md:hidden bg-gray-100 px-4 pt-3 pb-2">
+        <div className="flex gap-2 overflow-x-auto snap-x snap-mandatory">
+          {BANNERS.map((src, i) => (
+            <div key={i} className="shrink-0 basis-[92%] snap-start rounded-3xl overflow-hidden bg-white shadow-md">
+              <img
+                src={src}
+                alt={`Banner ${i + 1}`}
+                loading="lazy"
+                className="w-full h-56 object-cover object-center"
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Bottom fade to gray background */}
-      <div className="absolute bottom-0 left-0 right-0 h-64 bg-linear-to-t from-gray-100 via-gray-100/80 to-transparent pointer-events-none" />
+      <div className="relative hidden md:block w-full overflow-hidden" style={{ height: 600 }}>
+        {/* Slides */}
+        <div
+          className="flex transition-transform duration-500 ease-in-out h-full"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {BANNERS.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt={`Banner ${i + 1}`}
+              loading="lazy"
+              className="w-full shrink-0 object-cover object-top"
+              style={{ height: 600 }}
+            />
+          ))}
+        </div>
 
-      {/* Left arrow */}
-      <button
-        onClick={prev}
-        className="absolute left-0 top-0 z-10 bg-transparent hover:bg-white/10 border-none text-gray-700 w-12 flex items-center justify-center transition-all cursor-pointer"
-        style={{ height: 340 }}
-        aria-label="Previous banner"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-8 h-8">
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-      </button>
+        {/* Bottom fade to gray background */}
+        <div className="absolute bottom-0 left-0 right-0 h-64 bg-linear-to-t from-gray-100 via-gray-100/80 to-transparent pointer-events-none" />
 
-      {/* Right arrow */}
-      <button
-        onClick={next}
-        className="absolute right-0 top-0 z-10 bg-transparent hover:bg-white/10 border-none text-gray-700 w-12 flex items-center justify-center transition-all cursor-pointer"
-        style={{ height: 340 }}
-        aria-label="Next banner"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-8 h-8">
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
-      </button>
-    </div>
+        {/* Left arrow */}
+        <button
+          onClick={prev}
+          className="absolute left-0 top-0 z-10 bg-transparent hover:bg-white/10 border-none text-gray-700 w-12 flex items-center justify-center transition-all cursor-pointer"
+          style={{ height: 340 }}
+          aria-label="Previous banner"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-8 h-8">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+
+        {/* Right arrow */}
+        <button
+          onClick={next}
+          className="absolute right-0 top-0 z-10 bg-transparent hover:bg-white/10 border-none text-gray-700 w-12 flex items-center justify-center transition-all cursor-pointer"
+          style={{ height: 340 }}
+          aria-label="Next banner"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="w-8 h-8">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      </div>
+    </>
   );
 }
 
@@ -197,8 +223,8 @@ function ProductCarousel({ title, items, linkHref }) {
         {/* Scrollable container */}
         <div ref={scrollRef} className="flex gap-4 overflow-x-auto scroll-smooth" style={{ scrollbarWidth: "none" }}>
           {items.map((item, i) => (
-            <div key={i} className="shrink-0 w-[150px] flex flex-col items-center">
-              <div className="h-[180px] w-full flex items-center justify-center">
+            <div key={i} className="shrink-0 w-37.5 flex flex-col items-center">
+              <div className="h-45 w-full flex items-center justify-center">
                 <img src={item.img} alt={item.label} className="max-h-full max-w-full object-contain" />
               </div>
             </div>
@@ -313,7 +339,7 @@ function HomeContent() {
         <div className="relative">
           <BannerCarousel />
           {/* Cards overlapping the banner */}
-          <div className="relative z-20 w-full px-4 -mt-85">
+          <div className="relative z-20 w-full px-4 mt-4 md:-mt-85">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {CATEGORY_CARDS.map((card) => (
                 <CategoryCard key={card.slug} {...card} />
