@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "../../../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 
-export default function LoginPage() {
+function LoginContent() {
   const { user, login } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -65,5 +65,13 @@ export default function LoginPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginContent />
+    </Suspense>
   );
 }
