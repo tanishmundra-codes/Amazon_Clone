@@ -26,6 +26,7 @@ export default function CheckoutPage() {
     zipCode: "",
   });
   const [placing, setPlacing] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
   const [error, setError] = useState("");
 
   // Redirect unauthenticated users
@@ -37,10 +38,10 @@ export default function CheckoutPage() {
 
   // Redirect if cart is empty
   useEffect(() => {
-    if (!authLoading && user && cartCount === 0 && cartItems.length === 0) {
+    if (!authLoading && user && cartCount === 0 && cartItems.length === 0 && !orderPlaced) {
       router.replace("/cart");
     }
-  }, [cartCount, cartItems.length, user, authLoading, router]);
+  }, [cartCount, cartItems.length, user, authLoading, router, orderPlaced]);
 
   // Pre-fill name from logged-in user
   useEffect(() => {
@@ -69,6 +70,7 @@ export default function CheckoutPage() {
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.message || "Failed to place order");
+      setOrderPlaced(true);
       await refreshCart(); // sync cart count in Navbar
       router.push(`/order/${json.data.orderId}`);
     } catch (err) {
